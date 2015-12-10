@@ -2,6 +2,15 @@
  * Created by alykoshin on 10.12.15.
  */
 
+var noop = function () {};
+var methods = [
+  'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+  'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+  'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+  'timeStamp', 'trace', 'warn'
+];
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  * Prevents errors on console methods when no console present.
 //  * Exposes a global 'debug' function that preserves line numbering and formatting.
@@ -11,17 +20,10 @@ var _debug = function (obj) {
   that.obj = obj;
 
   var method;
-  var noop = function () {};
-  var methods = [
-    'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
-    'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
-    'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
-    'timeStamp', 'trace', 'warn'
-  ];
-
+  var con;
   if ( typeof window !== 'undefined') {
     window.console = window.console || {};
-    var con    = window.console;
+    con = window.console;
   } else {
     con = console || {};
   }
@@ -85,13 +87,7 @@ var _debug = function (obj) {
 };
 function _no_debug() {
   var that = {};
-  var noop = function () {};
-  var methods = [
-    'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
-    'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
-    'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
-    'timeStamp', 'trace', 'warn'
-  ];
+
   var length = methods.length;
   while (length--) {
     var method = methods[length];
@@ -100,7 +96,7 @@ function _no_debug() {
   return that;
 }
 //var debug = _no_debug();
-var debug = _debug();
+var debugObj = _debug();
 //var debug = console;
 
 var assert     = function(condition, message) {
@@ -118,14 +114,14 @@ var assert     = function(condition, message) {
 ////////////////////////////////////////////////////////////////////////////////
 
 if (typeof module !== 'undefined') {
-  var exports = debug;
-  exports.debug = debug;
+  var exports = debugObj;
+  //exports.debug = debugObj;
   exports.assert = assert;
 
   module.exports = exports;
 }
 
 if (typeof window !== 'undefined') {
-  window.debug = debug;
+  window.debug = debugObj;
   window.assert  = assert;
 }
