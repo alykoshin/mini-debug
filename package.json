@@ -1,6 +1,6 @@
 {
   "name": "mini-debug",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Mini debug module to replace browser console",
   "main": "index.js",
   "scripts": {
@@ -45,6 +45,5 @@
     "mocha": "^2.3.4",
     "mockery": "^1.4.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
