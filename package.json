@@ -4,9 +4,9 @@
   "description": "Mini debug module to replace browser console",
   "main": "index.js",
   "scripts": {
-    "_test": "echo \"Error: no test specified\" && exit 0",
-    "__test": "echo \"Error: no test specified\" && exit 1",
-    "test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "_test": "echo \"Error: no test specified\" && exit 1",
+    "__test": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
     "_commit": "git commit -am \"commit by 'npm run commit'\"",
     "_push": "git push --follow-tags",
