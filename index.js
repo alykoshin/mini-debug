@@ -21,62 +21,64 @@ var _debug = function (obj) {
 
   if ( typeof window !== 'undefined') {
     window.console = window.console || {};
-    var console    = window.console;
+    var con    = window.console;
+  } else {
+    con = console || {};
   }
 
-  if (!console['debug']) { console.debug = console.log; } // IE does not support debug.
+  if (!con['debug']) { con.debug = con.log; } // IE does not support debug.
 
   var length = methods.length;
   while (length--) {
     method = methods[length];
 
     // Only stub undefined methods.
-    if ( ! console[method] ) { // .hasOwnProperty(method) ) { // !console[method] ) {
-      console[method] = noop; // Disable for console
+    if ( ! con[method] ) { // .hasOwnProperty(method) ) { // !con[method] ) {
+      con[method] = noop; // Disable for con
       that[method]    = noop; // and for this object too
     } else {
       if (Function.prototype.bind) {
-        that[method] = Function.prototype.bind.call(console[method], console, '%s'); // '%s' does not works for group
+        that[method] = Function.prototype.bind.call(con[method], con, '%s'); // '%s' does not works for group
       } else {
-        that[method] = Function.prototype.apply.call(console[method], console, 'xyz',arguments);
+        that[method] = Function.prototype.apply.call(con[method], con, 'xyz',arguments);
       }
     }
   }
   //if(that.obj) {
-  //  console.log('>>>>>>>>>>>>', that.obj.debugId, that.obj);
+  //  con.log('>>>>>>>>>>>>', that.obj.debugId, that.obj);
   // }
-  //  if (!console.debug) { // IE does not support console.debug
-  //    that.debug = Function.prototype.bind.call(console.log,   console, pref + ' **** debug:   %s');;
+  //  if (!con.debug) { // IE does not support con.debug
+  //    that.debug = Function.prototype.bind.call(con.log,   con, pref + ' **** debug:   %s');;
   //  } else {
-  //    that.debug = Function.prototype.bind.call(console.debug, console, pref + ' **** debug: %s');
+  //    that.debug = Function.prototype.bind.call(con.debug, con, pref + ' **** debug: %s');
   //  }
 
   /** Rewrite specific methods **/
   if (Function.prototype.bind) {
-    // console.log('_debug(): if (Function.prototype.bind) ');
+    // con.log('_debug(): if (Function.prototype.bind) ');
     var pref = '[' + ( (that.obj && that.obj.debugId) ? that.obj.debugId : 'null') +']';
 
 
-    that.error = Function.prototype.bind.call(console.error, console, pref + ' * error: %s');
-    that.warn  = Function.prototype.bind.call(console.warn , console, pref + ' ** warn:  %s');
-    that.info  = Function.prototype.bind.call(console.info,  console, pref + ' *** info:  %s');
-    if (!console.debug) { // IE does not support console.debug
-      that.debug = Function.prototype.bind.call(console.log,   console);//pref + ' **** debug:   %s');;
+    that.error = Function.prototype.bind.call(con.error, con, pref + ' * error: %s');
+    that.warn  = Function.prototype.bind.call(con.warn , con, pref + ' ** warn:  %s');
+    that.info  = Function.prototype.bind.call(con.info,  con, pref + ' *** info:  %s');
+    if (!con.debug) { // IE does not support con.debug
+      that.debug = Function.prototype.bind.call(con.log,   con);//pref + ' **** debug:   %s');;
     } else {
-      that.debug = Function.prototype.bind.call(console.debug, console);//pref + ' **** debug: %s');
+      that.debug = Function.prototype.bind.call(con.debug, con);//pref + ' **** debug: %s');
     }
-    that.log   = Function.prototype.bind.call(console.log,   console, pref + ' ***** log:   %s');
-    //    that.group = Function.prototype.bind.call(console.group, console, '%s');
-    that.group = Function.prototype.bind.call(console.log, console, pref + ' GROUP:   %s');
-    //    that.groupCollapsed = Function.prototype.bind.call(console.groupCollapsed, console, '%s');
-    that.groupCollapsed = Function.prototype.bind.call(console.log, console, pref + ' GROUP: %s');
-    //    if (!that.assert) { that.assert = Function.prototype.bind.call(console.error, console, '* assert: %s'); }
+    that.log   = Function.prototype.bind.call(con.log,   con, pref + ' ***** log:   %s');
+    //    that.group = Function.prototype.bind.call(con.group, con, '%s');
+    that.group = Function.prototype.bind.call(con.log, con, pref + ' GROUP:   %s');
+    //    that.groupCollapsed = Function.prototype.bind.call(con.groupCollapsed, con, '%s');
+    that.groupCollapsed = Function.prototype.bind.call(con.log, con, pref + ' GROUP: %s');
+    //    if (!that.assert) { that.assert = Function.prototype.bind.call(con.error, con, '* assert: %s'); }
     //  } else {
-    //    that.error = function() { Function.prototype.apply.call(console.error, console, arguments); };
-    //    that.warn  = function() { Function.prototype.apply.call(console.warn , console, arguments); };
-    //    that.info  = function() { Function.prototype.apply.call(console.info,  console, arguments); };
-    //    that.debug = function() { Function.prototype.apply.call(console.debug, console, arguments); };
-    //    that.log   = function() { Function.prototype.apply.call(console.log,   console, arguments); };
+    //    that.error = function() { Function.prototype.apply.call(con.error, con, arguments); };
+    //    that.warn  = function() { Function.prototype.apply.call(con.warn , con, arguments); };
+    //    that.info  = function() { Function.prototype.apply.call(con.info,  con, arguments); };
+    //    that.debug = function() { Function.prototype.apply.call(con.debug, con, arguments); };
+    //    that.log   = function() { Function.prototype.apply.call(con.log,   con, arguments); };
   }
 
   return that;
