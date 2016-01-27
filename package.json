@@ -1,6 +1,6 @@
 {
   "name": "mini-debug",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Mini debug module to replace browser console",
   "main": "./index.js",
   "scripts": {
